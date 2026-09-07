@@ -722,6 +722,7 @@ document.getElementById("adminRemoveLikesEleicao")?.addEventListener("click", as
 document.getElementById("adminExportCollageEleicao")?.addEventListener("click", async () => {
     const btn = document.getElementById("adminExportCollageEleicao");
     const original = btn.textContent;
+    if (!selectedEleicao.size) return showStatus("Nenhum post selecionado");
     btn.disabled = true;
     btn.textContent = "Aguarde...";
     try {

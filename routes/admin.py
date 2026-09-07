@@ -234,7 +234,11 @@ def admin_export_collage():
     img_dir = Config.BASE_DIR / "images"
 
     if not names:
-        names = sorted(f.name for f in img_dir.iterdir() if f.suffix.lower() in Config.ALLOWED_EXTENSIONS)
+        names = [
+            u.image_name
+            for u in db.session.query(Upload.image_name).filter(Upload.eleicao == 1).all()
+            if (img_dir / u.image_name).exists()
+        ]
 
     paths = []
     for n in names:
