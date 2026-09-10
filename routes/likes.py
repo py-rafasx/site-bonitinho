@@ -105,6 +105,7 @@ def _ranking_payload(eleicao_only=False):
             Upload.media_type,
             Upload.eleicao,
             Upload.user_id,
+            Upload.id,
             Upload.created_at,
             User.username.label("owner"),
             User.display_name.label("owner_display_name"),
@@ -116,7 +117,7 @@ def _ranking_payload(eleicao_only=False):
     )
     if eleicao_only:
         query = query.filter(Upload.eleicao == 1)
-    rows = query.group_by(Upload.id).order_by(db.desc("likes"), db.desc(Upload.created_at)).all()
+    rows = query.group_by(Upload.id).order_by(db.desc("likes"), db.desc(Upload.created_at), db.desc(Upload.id)).all()
 
     blocked = _blocked_ids()
     rows = [r for r in rows if not (r.user_id and r.user_id in blocked)]
@@ -129,6 +130,7 @@ def _ranking_payload(eleicao_only=False):
         media = {"name": r.image_name, "media_type": r.media_type}
         if pid not in post_map:
             post_map[pid] = {
+                "id": r.id,
                 "post_id": pid,
                 "name": r.image_name,
                 "owner": r.owner,

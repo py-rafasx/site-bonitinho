@@ -145,7 +145,7 @@ def get_profile_posts(username):
             comment_count.label("comments"),
         )
         .filter(Upload.user_id == user.id, Upload.active == 1)
-        .order_by(db.desc(Upload.created_at))
+        .order_by(db.desc(Upload.created_at), db.desc(Upload.id))
     )
     total = query.count()
     rows = query.offset((page - 1) * per_page).limit(per_page).all()

@@ -659,7 +659,8 @@ function feedAvatarUrl(avatar) {
 
 function feedTimeAgo(dateStr) {
     if (!dateStr) return "";
-    const d = new Date(dateStr + "Z");
+    // normalize "YYYY-MM-DD HH:MM:SS(.ffffff)" to ISO with ms so every browser parses it
+    const d = new Date(String(dateStr).replace(" ", "T").replace(/\.(\d{3})\d+/, ".$1") + "Z");
     const now = new Date();
     const diff = Math.floor((now - d) / 1000);
     if (diff < 60) return "agora";

@@ -76,7 +76,7 @@ def list_images():
         )
         .outerjoin(User, Upload.user_id == User.id)
         .filter(Upload.active == 1)
-        .order_by(db.desc(like_count), db.desc(Upload.created_at))
+        .order_by(db.desc(like_count), db.desc(Upload.created_at), db.desc(Upload.id))
         .all()
     )
 
@@ -178,7 +178,7 @@ def list_images_since():
         )
         .outerjoin(User, Upload.user_id == User.id)
         .filter(Upload.active == 1, Upload.created_at > after)
-        .order_by(db.desc(Upload.created_at))
+        .order_by(db.desc(Upload.created_at), db.desc(Upload.id))
         .all()
     )
 

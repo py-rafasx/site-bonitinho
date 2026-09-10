@@ -15,6 +15,13 @@ function showStatus(msg) {
     }, 3000);
 }
 
+function parsePostDate(dateStr) {
+    if (!dateStr) return 0;
+    const d = new Date(String(dateStr).replace(" ", "T").replace(/\.(\d{3})\d+/, ".$1") + "Z");
+    const t = d.getTime();
+    return isNaN(t) ? 0 : t;
+}
+
 const ACTIONS_HINT = "Selecione as imagens para realizar ações como excluir e remover likes.";
 const ACTIONS_HINT_ELECAO = "Selecione as imagens para realizar ações como excluir, remover likes, exportar collage e definir vencedoras.";
 
@@ -63,9 +70,9 @@ function getFilteredPosts() {
             const la = a.likes || 0, lb = b.likes || 0;
             if (la !== lb) return lb - la;
         }
-        const da = new Date(a.created_at || 0).getTime() || 0;
-        const dbb = new Date(b.created_at || 0).getTime() || 0;
-        return dbb - da;
+        const da = parsePostDate(a.created_at);
+        const dbb = parsePostDate(b.created_at);
+        return (dbb - da) || ((b.id || 0) - (a.id || 0));
     });
 }
 
@@ -570,9 +577,9 @@ function renderEleicaoPosts() {
             const la = a.likes || 0, lb = b.likes || 0;
             if (la !== lb) return lb - la;
         }
-        const da = new Date(a.created_at || 0).getTime() || 0;
-        const dbb = new Date(b.created_at || 0).getTime() || 0;
-        return dbb - da;
+        const da = parsePostDate(a.created_at);
+        const dbb = parsePostDate(b.created_at);
+        return (dbb - da) || ((b.id || 0) - (a.id || 0));
     });
 
     if (!sorted.length) {

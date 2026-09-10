@@ -83,7 +83,8 @@ class Upload(db.Model):
     nsfw = db.Column(db.Integer, nullable=False, default=0)
     eleicao = db.Column(db.Integer, nullable=False, default=0)
     active = db.Column(db.Integer, nullable=False, default=1)
-    created_at = db.Column(db.Text, nullable=False, default=lambda: datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
+    # microseconds keep upload order deterministic for multi-file/ZIP uploads
+    created_at = db.Column(db.Text, nullable=False, default=lambda: datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f"))
 
 
 class Like(db.Model):

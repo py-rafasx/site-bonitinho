@@ -286,7 +286,7 @@ def admin_turnos():
         .outerjoin(Like, Like.image_name == Upload.image_name)
         .filter(Upload.active == 1, Upload.eleicao == 1)
         .group_by(Upload.id)
-        .order_by(db.desc("likes"), db.desc(Upload.created_at))
+        .order_by(db.desc("likes"), db.desc(Upload.created_at), db.desc(Upload.id))
         .all()
     )
     history = Round.query.order_by(Round.round_number.desc()).all()
@@ -315,7 +315,7 @@ def admin_turnos_advance():
         .filter(Upload.active == 1, Upload.eleicao == 1)
         .outerjoin(Like, Like.image_name == Upload.image_name)
         .group_by(Upload.id)
-        .order_by(db.desc(db.func.count(Like.id)), db.desc(Upload.created_at))
+        .order_by(db.desc(db.func.count(Like.id)), db.desc(Upload.created_at), db.desc(Upload.id))
         .all()
     )
     names = [r.image_name for r in rows]
