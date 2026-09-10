@@ -696,10 +696,12 @@
   flex-shrink: 0;
 }
 
-#adminStatus {
+#adminStatus,
+#adminStatusEleicao {
   font-size: 0.75rem;
   color: var(--text-secondary);
-  align-self: flex-end;
+  text-align: center;
+  width: 100%;
 }
 
 /* Buttons */

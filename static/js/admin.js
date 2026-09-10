@@ -4,11 +4,19 @@ let postFilter = "all";
 let postSort = "recent";
 let postQuery = "";
 const status = document.getElementById("adminStatus");
+const statusEleicao = document.getElementById("adminStatusEleicao");
 
 function showStatus(msg) {
     status.textContent = msg;
-    setTimeout(() => { status.textContent = ""; }, 3000);
+    if (statusEleicao) statusEleicao.textContent = msg;
+    setTimeout(() => {
+        status.textContent = "";
+        if (statusEleicao) statusEleicao.textContent = "";
+    }, 3000);
 }
+
+const ACTIONS_HINT = "Selecione as imagens para realizar ações como excluir e remover likes.";
+const ACTIONS_HINT_ELECAO = "Selecione as imagens para realizar ações como excluir, remover likes, exportar collage e definir vencedoras.";
 
 function askConfirm(msg, confirmLabel = "Excluir") {
     return new Promise(resolve => {
@@ -234,7 +242,7 @@ document.getElementById("adminSelectAll").addEventListener("click", () => {
 
 /* Delete selected */
 document.getElementById("adminDeleteSelected").addEventListener("click", async () => {
-    if (!selected.size) return;
+    if (!selected.size) return showStatus(ACTIONS_HINT);
     if (!await askConfirm(`Excluir ${selected.size} post(s)?`)) return;
     const res = await api("DELETE", "/api/admin/images", { images: [...selected] });
     if (res.ok) {
@@ -246,7 +254,7 @@ document.getElementById("adminDeleteSelected").addEventListener("click", async (
 
 /* Remove likes */
 document.getElementById("adminRemoveLikes").addEventListener("click", async () => {
-    if (!selected.size) return;
+    if (!selected.size) return showStatus(ACTIONS_HINT);
     if (!await askConfirm(`Remover likes de ${selected.size} post(s)?`)) return;
     const res = await api("DELETE", "/api/admin/likes", { images: [...selected] });
     if (res.ok) showStatus("Likes removidos");
@@ -697,7 +705,7 @@ document.getElementById("adminSelectAllEleicaoPosts")?.addEventListener("click",
 
 /* Delete selected eleicao posts */
 document.getElementById("adminDeleteSelectedEleicao")?.addEventListener("click", async () => {
-    if (!selectedEleicao.size) return;
+    if (!selectedEleicao.size) return showStatus(ACTIONS_HINT_ELECAO);
     if (!await askConfirm(`Excluir ${selectedEleicao.size} post(s)?`)) return;
     const res = await api("DELETE", "/api/admin/images", { images: [...selectedEleicao] });
     if (res.ok) {
@@ -710,7 +718,7 @@ document.getElementById("adminDeleteSelectedEleicao")?.addEventListener("click",
 
 /* Remove likes eleicao posts */
 document.getElementById("adminRemoveLikesEleicao")?.addEventListener("click", async () => {
-    if (!selectedEleicao.size) return;
+    if (!selectedEleicao.size) return showStatus(ACTIONS_HINT_ELECAO);
     if (!await askConfirm(`Remover likes de ${selectedEleicao.size} post(s)?`)) return;
     const res = await api("DELETE", "/api/admin/likes", { images: [...selectedEleicao] });
     if (res.ok) showStatus("Likes removidos");
@@ -722,7 +730,7 @@ document.getElementById("adminRemoveLikesEleicao")?.addEventListener("click", as
 document.getElementById("adminExportCollageEleicao")?.addEventListener("click", async () => {
     const btn = document.getElementById("adminExportCollageEleicao");
     const original = btn.textContent;
-    if (!selectedEleicao.size) return showStatus("Nenhum post selecionado");
+    if (!selectedEleicao.size) return showStatus(ACTIONS_HINT_ELECAO);
     btn.disabled = true;
     btn.textContent = "Aguarde...";
     try {
@@ -749,7 +757,7 @@ document.getElementById("adminExportCollageEleicao")?.addEventListener("click", 
 /* Vencedora from eleicao posts subtab */
 document.getElementById("adminAddWinnerFromPosts")?.addEventListener("click", () => {
     const names = [...selectedEleicao];
-    if (!names.length) { showAlert("Nenhuma imagem selecionada. Marque uma imagem na lista para adicioná-la como vencedora."); return; }
+    if (!names.length) { showStatus(ACTIONS_HINT_ELECAO); return; }
     if (names.length > 1) { showAlert("Selecione apenas uma imagem para marcar como vencedora."); return; }
     const post = allPosts.find(p => p.name === names[0]);
     if (!post || !post.eleicao) { showAlert("Apenas imagens com tag Eleição podem ser vencedoras."); return; }
