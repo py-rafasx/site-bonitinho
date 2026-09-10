@@ -119,8 +119,8 @@
               </div>
               <div class="edit-preview">
                 <div class="edit-preview-label">Detalhes fixados — escolha o que aparece</div>
-                <div id="pinnedChooser" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;"></div>
-                <div class="edit-preview-box" id="pinnedPreview" style="margin-top:10px;min-height:40px;">Nenhum detalhe fixado</div>
+                <div id="pinnedChooser" class="edit-list"></div>
+                <div class="edit-preview-box" id="pinnedPreview">Nenhum detalhe fixado</div>
               </div>
             </section>
             <!-- Nomes -->
@@ -146,9 +146,9 @@
               </div>
               <div class="edit-field">
                 <label>Links / Redes sociais</label>
-                <div id="socialLinksList" style="display:flex;flex-direction:column;gap:8px;"></div>
-                <button type="button" class="edit-cancel" id="btnAddSocial" style="margin-top:8px;width:auto;padding:0 14px;height:32px;font-size:0.8125rem;">+ Adicionar link</button>
-                <p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">Ex: Instagram, Twitter, site — Nome e URL</p>
+                <div id="socialLinksList" class="edit-list"></div>
+                <button type="button" class="edit-cancel edit-inline-btn" id="btnAddSocial">+ Adicionar link</button>
+                <p class="edit-hint">Ex: Instagram, Twitter, site — Nome e URL</p>
               </div>
             </section>
             <!-- Pessoais -->
@@ -225,20 +225,20 @@
             </section>
             <!-- Segurança -->
             <section class="edit-panel" data-panel="seguranca">
-              <div class="edit-field">
+              <div class="edit-field edit-field--stack">
                 <label>Redefinir senha</label>
-                <input type="password" id="secCurrent" placeholder="Senha atual" autocomplete="current-password" style="margin-bottom:8px">
-                <input type="password" id="secNew" placeholder="Nova senha (mín. 4)" autocomplete="new-password" style="margin-bottom:8px">
+                <input type="password" id="secCurrent" placeholder="Senha atual" autocomplete="current-password">
+                <input type="password" id="secNew" placeholder="Nova senha (mín. 4)" autocomplete="new-password">
                 <input type="password" id="secConfirm" placeholder="Confirmar nova senha" autocomplete="new-password">
-                <button type="button" class="edit-save" id="btnChangePass" style="margin-top:10px;width:auto;padding:0 18px;height:36px;">Alterar senha</button>
-                <p id="secMsg" style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;"></p>
+                <button type="button" class="edit-save edit-inline-btn" id="btnChangePass">Alterar senha</button>
+                <p id="secMsg" class="edit-hint"></p>
               </div>
-              <div class="edit-field" style="border-top:1px solid var(--border);padding-top:14px;">
+              <div class="edit-field edit-field--separator">
                 <label>Códigos de recuperação (offline)</label>
-                <p style="font-size:0.75rem;color:var(--text-muted);margin:0 0 8px;">Gere 8 códigos para recuperar sua conta. Cada código só funciona uma vez. Arquivo será baixado.</p>
-                <button type="button" class="edit-cancel" id="btnGenCodes" style="width:auto;padding:0 16px;height:36px;">Gerar novos códigos</button>
-                <div id="recoveryCodes" style="margin-top:10px;display:none;grid-template-columns:repeat(2,1fr);gap:6px;"></div>
-                <p id="recoveryMsg" style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;"></p>
+                <p class="edit-hint edit-hint--tight">Gere 8 códigos para recuperar sua conta. Cada código só funciona uma vez. Arquivo será baixado.</p>
+                <button type="button" class="edit-cancel edit-inline-btn" id="btnGenCodes">Gerar novos códigos</button>
+                <div id="recoveryCodes" class="recovery-codes"></div>
+                <p id="recoveryMsg" class="edit-hint"></p>
               </div>
             </section>
             <!-- Educação -->
@@ -246,7 +246,7 @@
               <div class="edit-field">
                 <label for="editEducation">Educação</label>
                 <input type="text" id="editEducation" placeholder="Ex: USP - Ciência da Computação" maxlength="200">
-                <p style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">Escola, curso ou formação</p>
+                <p class="edit-hint">Escola, curso ou formação</p>
               </div>
             </section>
             <!-- Hobbies -->
@@ -254,8 +254,8 @@
               <div class="edit-field">
                 <label for="editHobbies">Hobbies</label>
                 <input type="text" id="editHobbies" placeholder="Ex: Futebol, Música, Leitura">
-                <p style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">Separe por vírgula — até 10</p>
-                <div id="hobbiesPreview" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+                <p class="edit-hint">Separe por vírgula — até 10</p>
+                <div id="hobbiesPreview" class="edit-chips"></div>
               </div>
             </section>
           </div>

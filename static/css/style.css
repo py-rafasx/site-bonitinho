@@ -105,20 +105,6 @@ html {
 [data-theme="dark"] .rank-silver { background: var(--rank-silver-bg); color: var(--rank-silver-text); }
 [data-theme="dark"] .rank-bronze { background: var(--rank-bronze-bg); color: var(--rank-bronze-text); }
 
-[data-theme="dark"] img[src$="/upvote.svg"],
-[data-theme="dark"] img[src$="/comments.svg"],
-[data-theme="dark"] img[src$="/download.svg"],
-[data-theme="dark"] img[src$="/grid.svg"],
-[data-theme="dark"] img[src$="/back.svg"],
-[data-theme="dark"] img[src$="/trash.svg"],
-[data-theme="dark"] img[src$="/zip.svg"],
-[data-theme="dark"] img[src$="/NSFW.svg"],
-[data-theme="dark"] img[src$="/eleicao.svg"],
-[data-theme="dark"] img[src$="/image.svg"],
-[data-theme="dark"] img[src$="/camera.svg"] {
-  filter: invert(1);
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--text);
@@ -189,8 +175,9 @@ body.clone-top #headerClone { top: 0; }
   background: var(--surface-2);
 }
 
-/* ícone vindo do arquivo svg via máscara: acompanha o tema/currentColor */
-.header-ico {
+/* ícones via máscara: acompanham o tema/currentColor */
+.header-ico,
+.ico {
   display: block;
   width: 18px;
   height: 18px;
@@ -214,6 +201,15 @@ body.clone-top #headerClone { top: 0; }
   -webkit-mask-image: url("/static/svg/bell.svg");
   mask-image: url("/static/svg/bell.svg");
 }
+.ico-upvote { -webkit-mask-image: url("/static/svg/upvote.svg"); mask-image: url("/static/svg/upvote.svg"); }
+.ico-upvote-filled { -webkit-mask-image: url("/static/svg/upvote-filled.svg"); mask-image: url("/static/svg/upvote-filled.svg"); }
+.ico-comments { -webkit-mask-image: url("/static/svg/comments.svg"); mask-image: url("/static/svg/comments.svg"); }
+.ico-download { -webkit-mask-image: url("/static/svg/download.svg"); mask-image: url("/static/svg/download.svg"); }
+.ico-trash { -webkit-mask-image: url("/static/svg/trash.svg"); mask-image: url("/static/svg/trash.svg"); }
+.ico-zip { -webkit-mask-image: url("/static/svg/zip.svg"); mask-image: url("/static/svg/zip.svg"); }
+.ico-nsfw { -webkit-mask-image: url("/static/svg/NSFW.svg"); mask-image: url("/static/svg/NSFW.svg"); }
+.ico-eleicao { -webkit-mask-image: url("/static/svg/eleicao.svg"); mask-image: url("/static/svg/eleicao.svg"); }
+.ico-image-placeholder { -webkit-mask-image: url("/static/svg/image-placeholder.svg"); mask-image: url("/static/svg/image-placeholder.svg"); }
 
 /* === Busca === */
 .search-overlay {
@@ -1788,6 +1784,9 @@ body.clone-top #headerClone { top: 0; }
 }
 
 .feed-nsfw-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   padding: 0.1rem 0.4rem;
   border-radius: 4px;
   font-size: 0.6875rem;
@@ -1799,6 +1798,9 @@ body.clone-top #headerClone { top: 0; }
 }
 
 .feed-eleicao-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   padding: 0.1rem 0.4rem;
   border-radius: 4px;
   font-size: 0.6875rem;
@@ -1806,6 +1808,13 @@ body.clone-top #headerClone { top: 0; }
   color: #fff;
   background: var(--btn-bg);
   white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.feed-nsfw-badge .ico,
+.feed-eleicao-badge .ico {
+  width: 12px;
+  height: 12px;
   flex-shrink: 0;
 }
 
@@ -2080,15 +2089,15 @@ body.clone-top #headerClone { top: 0; }
   background: var(--surface-2);
 }
 
-.feed-like img,
-.feed-comment-toggle img,
-.feed-download img {
+.feed-like .ico,
+.feed-comment-toggle .ico,
+.feed-download .ico {
   width: 20px;
   height: 20px;
   transition: transform 0.15s ease;
 }
 
-.feed-like.liked img {
+.feed-like.liked .ico {
   animation: like-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -2903,7 +2912,7 @@ body.clone-top #headerClone { top: 0; }
   color: var(--text);
 }
 
-/* Confirm modal */
+/* Admin/confirm buttons (shared) */
 .admin-btn {
   min-width: 0;
   padding: 0.5rem 0.625rem;
@@ -2914,13 +2923,27 @@ body.clone-top #headerClone { top: 0; }
   font-family: inherit;
   cursor: pointer;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background: var(--surface);
   color: var(--text-soft);
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
 }
 .admin-btn:hover {
   background: var(--surface-3);
   border-color: var(--border-strong);
+}
+.admin-btn:active {
+  transform: scale(0.97);
+}
+.admin-btn.primary {
+  background: var(--btn-bg);
+  border-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+.admin-btn.primary:hover {
+  background: var(--btn-hover);
+  border-color: var(--btn-hover);
 }
 .admin-btn.danger {
   border-color: var(--danger-soft);
@@ -2930,39 +2953,12 @@ body.clone-top #headerClone { top: 0; }
   background: var(--danger-soft);
   border-color: var(--danger);
 }
+.admin-btn.small {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.6875rem;
+}
 
-.confirm-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: var(--overlay);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-}
-.confirm-overlay.open {
-  display: flex;
-}
-.confirm-card {
-  background: var(--surface);
-  border-radius: var(--radius-xl);
-  padding: 1.5rem;
-  max-width: 320px;
-  width: 90%;
-  box-shadow: 0 8px 32px var(--shadow-strong);
-}
-.confirm-card p {
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: var(--text);
-  margin: 0 0 1.25rem;
-  line-height: 1.4;
-}
-.confirm-actions {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-}
+/* Confirm modal styles live in modals.css (shared) */
 .confirm-btn {
   min-width: 72px;
   padding: 0.5rem 1rem;
@@ -2989,6 +2985,15 @@ body.clone-top #headerClone { top: 0; }
 }
 .confirm-btn.danger:hover {
   background: var(--danger-soft);
+}
+.confirm-btn.primary {
+  background: var(--btn-bg);
+  border-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+.confirm-btn.primary:hover {
+  background: var(--btn-hover);
+  border-color: var(--btn-hover);
 }
 
 /* === Video Player === */

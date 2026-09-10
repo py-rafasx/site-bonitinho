@@ -28,7 +28,7 @@ async function loadRanking() {
     if (!items.length) {
         list.innerHTML = `
             <div class="votos-empty">
-                <img src="/static/svg/image-placeholder.svg" alt="" class="img-placeholder">
+                <span class="ico ico-image-placeholder img-placeholder" aria-hidden="true"></span>
                 <p>Nenhuma imagem ainda. Faça upload!</p>
             </div>
         `;
@@ -49,7 +49,7 @@ async function loadRanking() {
                         <img src="/images/${esc(item.name)}" alt="" loading="lazy">
                     </div>
                     <div class="votos-card-owner">@${esc(item.owner || "—")}</div>
-                    <div class="votos-card-likes"><img src="/static/svg/upvote-filled.svg" alt="" class="votos-upvote"> ${item.likes}${item.likers && item.likers.length ? '<span class="votos-card-arrow"></span>' : ""}</div>
+                    <div class="votos-card-likes"><span class="ico ico-upvote-filled votos-upvote" aria-hidden="true"></span> ${item.likes}${item.likers && item.likers.length ? '<span class="votos-card-arrow"></span>' : ""}</div>
                 </div>
                 <div class="votos-likers">
                     <div class="votos-likers-title">Curtido por:</div>
@@ -86,7 +86,7 @@ async function loadWinners() {
     if (!items.length) {
         list.innerHTML = `
             <div class="votos-empty">
-                <img src="/static/svg/image-placeholder.svg" alt="" class="img-placeholder">
+                <span class="ico ico-image-placeholder img-placeholder" aria-hidden="true"></span>
                 <p>Nenhuma vencedora ainda.</p>
             </div>
         `;

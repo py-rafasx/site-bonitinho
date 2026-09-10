@@ -438,7 +438,7 @@ function feedCardHTML(img, i) {
         }
     }
 
-    const downloadBtn = isText ? "" : `<button class="feed-download" data-name="${escText(img.name)}" type="button" title="Baixar"><img src="/static/svg/download.svg" alt="download"></button>`;
+    const downloadBtn = isText ? "" : `<button class="feed-download" data-name="${escText(img.name)}" type="button" title="Baixar"><span class="ico ico-download" aria-hidden="true"></span></button>`;
 
     const capText = img.caption || "";
     const capLong = capText.length > 300;
@@ -448,14 +448,10 @@ function feedCardHTML(img, i) {
     `;
     
     const tagNsfwHtml = img.nsfw ? `
-        <span class="feed-nsfw-badge" style="display: inline-flex; align-items: center; gap: 0.25rem; background: var(--danger); color: #fff; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.65rem; font-weight: 700; white-space: nowrap;">
-            <img src="/static/svg/NSFW.svg" alt="" style="width: 12px; height: 12px; filter: brightness(0) invert(1);"> NSFW
-        </span>` : '';
+        <span class="feed-nsfw-badge"><span class="ico ico-nsfw" aria-hidden="true"></span> NSFW</span>` : '';
         
     const tagEleicaoHtml = img.eleicao ? `
-        <span class="feed-eleicao-badge" style="display: inline-flex; align-items: center; gap: 0.25rem; background: var(--btn-bg); color: #fff; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.65rem; font-weight: 700; white-space: nowrap;">
-            <img src="/static/svg/eleicao.svg" alt="" style="width: 12px; height: 12px; filter: brightness(0) invert(1);"> Eleição
-        </span>` : '';
+        <span class="feed-eleicao-badge"><span class="ico ico-eleicao" aria-hidden="true"></span> Eleição</span>` : '';
 
     const userPlaceholder = myUser && myUser.display_name ? `Comente como ${myUser.display_name}` : "Adicione um comentário...";
     const carouselControls = isMulti ? `
@@ -492,11 +488,11 @@ function feedCardHTML(img, i) {
         ${mediaSection}
         <div class="feed-actions">
             <button class="feed-like ${liked ? "liked" : ""}" data-name="${escText(img.name)}" type="button">
-                <img src="${liked ? "/static/svg/upvote-filled.svg" : "/static/svg/upvote.svg"}" alt="like">
+                <span class="ico ${liked ? "ico-upvote-filled" : "ico-upvote"}" aria-hidden="true"></span>
             </button>
             <span class="feed-likes" data-name="${escText(img.name)}" role="button">${likes > 0 ? likes : ""}</span>
             <button class="feed-comment-toggle" data-name="${escText(img.name)}" type="button">
-                <img src="/static/svg/comments.svg" alt="comment">
+                <span class="ico ico-comments" aria-hidden="true"></span>
             </button>
             <span class="feed-comment-count">${comments > 0 ? comments : ""}</span>
             ${downloadBtn}
@@ -548,6 +544,13 @@ function initFeedMedia(root) {
     root.querySelectorAll(".video-player").forEach(initVideoPlayer);
 }
 
+function setLikeIcon(btn, liked) {
+    const ico = btn && btn.querySelector(".ico");
+    if (!ico) return;
+    ico.classList.toggle("ico-upvote-filled", liked);
+    ico.classList.toggle("ico-upvote", !liked);
+}
+
 async function toggleFeedLike(btn) {
     const name = btn.dataset.name;
     if (!name) return;
@@ -559,7 +562,7 @@ async function toggleFeedLike(btn) {
     const liked = !wasLiked;
 
     btn.classList.toggle("liked", liked);
-    btn.querySelector("img").src = liked ? "/static/svg/upvote-filled.svg" : "/static/svg/upvote.svg";
+    setLikeIcon(btn, liked);
 
     const countEl = btn.parentElement.querySelector(".feed-likes");
     const before = parseInt(countEl.textContent) || 0;
@@ -583,7 +586,7 @@ async function toggleFeedLike(btn) {
             const prevBtn = document.querySelector(`.feed-like[data-name="${CSS.escape(n)}"]`);
             if (prevBtn) {
                 prevBtn.classList.remove("liked");
-                prevBtn.querySelector("img").src = "/static/svg/upvote.svg";
+                setLikeIcon(prevBtn, false);
             }
             const prevCountEl = document.querySelector(`.feed-likes[data-name="${CSS.escape(n)}"]`);
             if (prevCountEl) {
@@ -606,7 +609,7 @@ async function toggleFeedLike(btn) {
         if (wasLiked) likedImages.add(name);
         else likedImages.delete(name);
         btn.classList.toggle("liked", wasLiked);
-        btn.querySelector("img").src = wasLiked ? "/static/svg/upvote-filled.svg" : "/static/svg/upvote.svg";
+        setLikeIcon(btn, wasLiked);
         countEl.textContent = before > 0 ? before : "";
         if (img) img.likes = Math.max(0, (img.likes || 0) - delta);
         if (prevUnlikedName) {
@@ -615,7 +618,7 @@ async function toggleFeedLike(btn) {
             const prevBtn = document.querySelector(`.feed-like[data-name="${CSS.escape(prevUnlikedName)}"]`);
             if (prevBtn) {
                 prevBtn.classList.add("liked");
-                prevBtn.querySelector("img").src = "/static/svg/upvote-filled.svg";
+                setLikeIcon(prevBtn, true);
             }
             const prevCountEl = document.querySelector(`.feed-likes[data-name="${CSS.escape(prevUnlikedName)}"]`);
             if (prevCountEl) {
@@ -1085,9 +1088,9 @@ function onFeedClick(e) {
                 const chip = document.createElement("div");
                 chip.className = "composer-preview-item";
                 chip.style.cssText = "position: relative; width: 60px; height: 60px; border-radius: 4px; overflow: hidden; background: var(--surface-2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px; box-sizing: border-box;";
-                const icon = document.createElement("img");
-                icon.src = "/static/svg/zip.svg";
-                icon.style.cssText = "width: 18px; height: 18px; opacity: .7;";
+                const icon = document.createElement("span");
+                icon.className = "ico ico-zip";
+                icon.style.cssText = "opacity: .7;";
                 const label = document.createElement("span");
                 label.textContent = selectedZip.name;
                 label.style.cssText = "font-size: 0.5rem; color: var(--text-secondary); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;";

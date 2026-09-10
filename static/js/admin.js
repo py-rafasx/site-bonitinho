@@ -108,11 +108,11 @@ function renderPosts() {
                 ${typeBadge}
                 <button class="admin-nsfw-btn${img.nsfw ? ' active' : ''}" data-name="${esc(img.name)}" title="Marcar NSFW">NSFW</button>
                 <button class="admin-eleicao-btn${img.eleicao ? ' active' : ''}" data-name="${esc(img.name)}" title="Marcar Eleição">Eleição</button>
-                <span class="admin-card-likes" style="margin-left: auto;"><img src="/static/svg/upvote-filled.svg" alt="" class="admin-card-upvote"> ${img.likes || 0}${img.likers && img.likers.length ? '<span class="admin-card-arrow"></span>' : ""}</span>
+                <span class="admin-card-likes"><span class="ico ico-upvote-filled admin-card-upvote" aria-hidden="true"></span> ${img.likes || 0}${img.likers && img.likers.length ? '<span class="admin-card-arrow"></span>' : ""}</span>
             </div>
             <div class="admin-likers">
                 ${img.likers && img.likers.length
-                    ? img.likers.map(u => `<span class="admin-liker-tag" data-user-id="${u.id}" data-image="${esc(img.name)}"><span class="admin-liker-name">@${esc(u.username)}</span><img src="/static/svg/trash.svg" alt="del" class="admin-liker-icon"></span>`).join("")
+                    ? img.likers.map(u => `<span class="admin-liker-tag" data-user-id="${u.id}" data-image="${esc(img.name)}"><span class="admin-liker-name">@${esc(u.username)}</span><span class="ico ico-trash admin-liker-icon" aria-hidden="true"></span></span>`).join("")
                     : `<span style="font-size:0.6875rem;color:#9ca3af">Nenhum like</span>`}
             </div>
         </div>`;
@@ -467,7 +467,7 @@ async function loadTurnos() {
             <img src="/images/${img.name}" alt="${img.name}" loading="lazy">
             <div class="admin-card-info">
                 <span>${esc(img.owner || "—")}</span>
-                <span><img src="/static/svg/upvote-filled.svg" alt="" class="admin-card-upvote"> ${img.likes || 0}</span>
+                <span><span class="ico ico-upvote-filled admin-card-upvote" aria-hidden="true"></span> ${img.likes || 0}</span>
             </div>
         </div>
     `).join("");
@@ -602,11 +602,11 @@ function renderEleicaoPosts() {
                 ${typeBadge}
                 <button class="admin-nsfw-btn${img.nsfw ? ' active' : ''}" data-name="${esc(img.name)}" title="Marcar NSFW">NSFW</button>
                 <button class="admin-eleicao-btn active" data-name="${esc(img.name)}" title="Marcar Eleição">Eleição</button>
-                <span class="admin-card-likes" style="margin-left: auto;"><img src="/static/svg/upvote-filled.svg" alt="" class="admin-card-upvote"> ${img.likes || 0}${img.likers && img.likers.length ? '<span class="admin-card-arrow"></span>' : ""}</span>
+                <span class="admin-card-likes"><span class="ico ico-upvote-filled admin-card-upvote" aria-hidden="true"></span> ${img.likes || 0}${img.likers && img.likers.length ? '<span class="admin-card-arrow"></span>' : ""}</span>
             </div>
             <div class="admin-likers">
                 ${img.likers && img.likers.length
-                    ? img.likers.map(u => `<span class="admin-liker-tag" data-user-id="${u.id}" data-image="${esc(img.name)}"><span class="admin-liker-name">@${esc(u.username)}</span><img src="/static/svg/trash.svg" alt="del" class="admin-liker-icon"></span>`).join("")
+                    ? img.likers.map(u => `<span class="admin-liker-tag" data-user-id="${u.id}" data-image="${esc(img.name)}"><span class="admin-liker-name">@${esc(u.username)}</span><span class="ico ico-trash admin-liker-icon" aria-hidden="true"></span></span>`).join("")
                     : `<span style="font-size:0.6875rem;color:#9ca3af">Nenhum like</span>`}
             </div>
         </div>`;

@@ -302,7 +302,7 @@
 
 .admin-card-likes {
   flex: none;
-  margin-left: 0.25rem;
+  margin-left: auto;
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -705,113 +705,18 @@
   width: 100%;
 }
 
-/* Buttons */
-.admin-btn {
-  min-width: 0;
-  padding: 0.5rem 0.625rem;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: 0.75rem;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: var(--surface);
-  color: var(--text-soft);
-  transition: background 0.15s, border-color 0.15s, transform 0.1s;
-}
-
-.admin-btn:hover {
-  background: var(--surface-3);
-  border-color: var(--border-strong);
-}
-
-.admin-btn:active {
-  transform: scale(0.97);
-}
-
-.admin-btn.primary {
-  background: var(--btn-bg);
-  border-color: var(--btn-bg);
-  color: var(--btn-text);
-}
-
-.admin-btn.primary:hover {
-  background: var(--btn-hover);
-  border-color: var(--btn-hover);
-}
-
-.admin-btn.danger {
-  border-color: var(--danger-soft);
-  color: var(--danger);
-}
-
-.admin-btn.danger:hover {
-  background: var(--danger-soft);
-  border-color: var(--danger);
-}
-
+/* Buttons: base styles live in style.css (shared) */
 .admin-btn.small {
   padding: 0.3rem 0.5rem;
   font-size: 0.6875rem;
 }
 
 
-/* Confirm modal */
-.confirm-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: var(--overlay);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-}
-
-.confirm-overlay.open {
-  display: flex;
-}
-
-.confirm-card {
-  background: var(--surface);
-  border-radius: var(--radius-xl);
-  padding: 1.5rem;
-  max-width: 320px;
-  width: 90%;
-  box-shadow: 0 8px 32px var(--shadow-strong);
-}
-
-.confirm-card p {
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: var(--text);
-  margin: 0 0 1.25rem;
-  line-height: 1.4;
-}
-
-.confirm-actions {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-}
-
+/* Confirm modal styles live in style.css (shared) */
 .confirm-actions .admin-btn {
   min-width: 72px;
   justify-content: center;
   padding: 0.5rem 1rem;
-}
-
-.confirm-btn.primary {
-  background: var(--btn-bg);
-  border-color: var(--btn-bg);
-  color: var(--btn-text);
-}
-
-.confirm-btn.primary:hover {
-  background: var(--btn-hover);
-  border-color: var(--btn-hover);
 }
 
 /* Turnos panel */
@@ -1032,41 +937,7 @@
   display: flex;
 }
 
-/* Winner modal */
-.winner-modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: var(--overlay);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.winner-modal-overlay.open {
-  display: flex;
-}
-
-.winner-modal-card {
-  background: var(--surface);
-  border-radius: var(--radius-xl);
-  padding: 1.25rem;
-  max-width: 380px;
-  width: 90%;
-  box-shadow: 0 8px 32px var(--shadow-strong);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.winner-modal-card h3 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
+/* Winner modal shell/card/h3 live in modals.css (shared) */
 .winner-modal-preview {
   width: 100%;
   aspect-ratio: 1;
@@ -1082,52 +953,7 @@
   display: block;
 }
 
-.winner-modal-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.winner-modal-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.winner-modal-label span {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.winner-modal-input {
-  width: 100%;
-  min-height: 36px;
-  padding: 0.375rem 0.625rem;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: 0.8125rem;
-  font-family: inherit;
-  background: var(--surface);
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.15s;
-  box-sizing: border-box;
-  resize: vertical;
-}
-
-.winner-modal-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-.winner-modal-actions {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-  padding-top: 0.25rem;
-}
-
+/* fields/labels/inputs/actions live in modals.css (shared) */
 .winner-modal-actions .confirm-btn {
   min-width: 72px;
   justify-content: center;
