@@ -18,6 +18,11 @@
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 :root {
@@ -114,6 +119,11 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 img {
@@ -2095,6 +2105,10 @@ body.clone-top #headerClone { top: 0; }
   width: 20px;
   height: 20px;
   transition: transform 0.15s ease;
+}
+
+.feed-like.liked {
+  color: var(--btn-bg);
 }
 
 .feed-like.liked .ico {

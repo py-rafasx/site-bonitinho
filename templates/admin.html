@@ -52,13 +52,12 @@
   </div>
 
   <div id="tabUsers" style="display:none">
-    <div class="turnos-panel u-mb-sm">
-      <div class="turnos-stats">
-        <label class="turnos-stat u-row-between">
-          <span class="turnos-stat-label u-text-sm">Exigir aprovação de novos usuários</span>
-          <span class="turnos-check"><input type="checkbox" id="settingRequireApproval">Ativar</span>
-        </label>
-      </div>
+    <div class="users-settings">
+      <span class="users-settings-label">Exigir aprovação de novos usuários</span>
+      <label class="users-settings-check">
+        <input type="checkbox" id="settingRequireApproval">
+        Ativar
+      </label>
     </div>
     <div class="users-search-wrap">
       <input type="text" class="users-search" id="usersSearch" placeholder="Buscar usuário...">
@@ -130,6 +129,7 @@
   <div class="confirm-overlay" id="confirmModal">
     <div class="confirm-card">
       <p id="confirmMsg"></p>
+      <input type="password" id="confirmInput" class="confirm-input" placeholder="Nova senha" autocomplete="new-password" hidden>
       <div class="confirm-actions">
         <button id="confirmNo" class="confirm-btn">Não</button>
         <button id="confirmYes" class="confirm-btn danger">Excluir</button>

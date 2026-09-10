@@ -25,21 +25,54 @@ function parsePostDate(dateStr) {
 const ACTIONS_HINT = "Selecione as imagens para realizar ações como excluir e remover likes.";
 const ACTIONS_HINT_ELECAO = "Selecione as imagens para realizar ações como excluir, remover likes, exportar collage e definir vencedoras.";
 
-function askConfirm(msg, confirmLabel = "Excluir") {
+function askConfirm(msg, confirmLabel = "Excluir", cancelLabel = "Não", opts = {}) {
     return new Promise(resolve => {
         document.getElementById("confirmMsg").textContent = msg;
         const yesBtn = document.getElementById("confirmYes");
         yesBtn.textContent = confirmLabel;
+        yesBtn.classList.toggle("danger", confirmLabel === "Excluir");
+        document.getElementById("confirmNo").textContent = cancelLabel;
+        const inputEl = document.getElementById("confirmInput");
+        const ensurePlainInput = () => {
+            const wrapper = inputEl.closest(".password-wrapper");
+            if (wrapper) {
+                const btn = wrapper.querySelector(".password-toggle");
+                if (btn) btn.remove();
+                wrapper.parentNode.insertBefore(inputEl, wrapper);
+                wrapper.remove();
+            }
+            inputEl.type = "password";
+        };
+        const toggleInput = (show) => {
+            ensurePlainInput();
+            if (show) {
+                inputEl.hidden = false;
+                inputEl.value = "";
+                inputEl.placeholder = opts.placeholder || "Digite aqui";
+                setTimeout(() => inputEl.focus(), 50);
+            } else {
+                inputEl.hidden = true;
+            }
+        };
+        toggleInput(!!opts.input);
         const modal = document.getElementById("confirmModal");
         modal.classList.add("open");
         const cleanup = (val) => {
             modal.classList.remove("open");
             yesBtn.onclick = null;
             document.getElementById("confirmNo").onclick = null;
+            document.removeEventListener("keydown", onKey);
             resolve(val);
         };
-        yesBtn.onclick = () => cleanup(true);
-        document.getElementById("confirmNo").onclick = () => cleanup(false);
+        const onConfirm = () => cleanup(opts.input ? inputEl.value.trim() : true);
+        const onCancel = () => cleanup(false);
+        const onKey = (e) => {
+            if (e.key === "Enter") { e.preventDefault(); onConfirm(); }
+            if (e.key === "Escape") { e.preventDefault(); onCancel(); }
+        };
+        yesBtn.onclick = onConfirm;
+        document.getElementById("confirmNo").onclick = onCancel;
+        document.addEventListener("keydown", onKey);
     });
 }
 
@@ -348,7 +381,7 @@ function renderUsers(filter = "") {
     list.querySelectorAll("[data-approve]").forEach(btn => {
         btn.addEventListener("click", async (e) => {
             e.stopPropagation();
-            if (!await askConfirm("Aprovar este usuário?")) return;
+            if (!await askConfirm("Aprovar este usuário?", "Aprovar", "Cancelar")) return;
             const res = await api("PUT", `/api/admin/users/${btn.dataset.approve}/approve`);
             if (res.ok) {
                 showStatus("Usuário aprovado");
@@ -422,10 +455,10 @@ function renderUsers(filter = "") {
     list.querySelectorAll("[data-reset]").forEach(btn => {
         btn.addEventListener("click", async (e) => {
             e.stopPropagation();
-            const newPass = await showPrompt(`Digite a nova senha para @${btn.dataset.name}`, "", "Resetar senha", "Redefinir", "Nova senha (mín. 4)");
-            if (newPass === null) return;
-            if (!newPass || newPass.trim().length < 4) { showStatus("Mínimo 4 caracteres"); return; }
-            const res = await api("PUT", `/api/admin/users/${btn.dataset.reset}/reset-password`, { password: newPass.trim() });
+            const newPass = await askConfirm(`Digite a nova senha para @${btn.dataset.name}`, "Redefinir", "Cancelar", { input: "password", placeholder: "Nova senha (mín. 4)" });
+            if (!newPass) return;
+            if (newPass.length < 4) { showStatus("Mínimo 4 caracteres"); return; }
+            const res = await api("PUT", `/api/admin/users/${btn.dataset.reset}/reset-password`, { password: newPass });
             const data = await res.json().catch(()=>null);
             if (res.ok) showStatus(`Senha de @${btn.dataset.name} redefinida`);
             else showStatus(data?.error || "Erro ao resetar");
