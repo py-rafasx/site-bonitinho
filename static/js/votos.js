@@ -161,8 +161,7 @@ loadRanking();
 /* === Admin winner modal === */
 (async function initWinnerModal() {
     try {
-        const res = await fetch("/api/auth/me");
-        const data = await res.json();
+        const data = await fetchCurrentMe();
         if (!data.user || !data.user.is_admin) return;
         isAdmin = true;
     } catch { return; }

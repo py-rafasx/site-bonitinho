@@ -110,7 +110,7 @@ function restoreProfileUI(state) {
 async function loadProfile(forceRefresh = false) {
     const username = getUsernameFromURL();
     if (!username) {
-        const me = await fetch("/api/auth/me").then(r => r.json()).catch(() => null);
+        const me = await fetchCurrentMe();
         if (me?.user) {
             location.replace("/perfil/" + encodeURIComponent(me.user.username));
         } else {

@@ -18,8 +18,7 @@ let composerNsfwActive = false;
 
 async function initComposerAdminCheck() {
     try {
-        const res = await fetch("/api/auth/me");
-        const data = await res.json();
+        const data = await fetchCurrentMe();
         if (!data.user?.is_admin) {
             window.currentUserIsAdmin = false;
             if (composerAddZip) composerAddZip.style.display = "none";

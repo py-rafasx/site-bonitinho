@@ -16,8 +16,7 @@ function userColor(username) {
 
 async function fetchCurrentUser() {
     try {
-        const res = await fetch("/api/auth/me");
-        const data = await res.json();
+        const data = await fetchCurrentMe();
         if (data.user) {
             currentUserId = data.user.id;
             isAdmin = data.user.is_admin || false;

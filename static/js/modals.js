@@ -1,3 +1,19 @@
+let _mePromise = null;
+let _meCache = null;
+window.fetchCurrentMe = function () {
+  if (_meCache) return Promise.resolve(_meCache);
+  if (_mePromise) return _mePromise;
+  _mePromise = fetch("/api/auth/me", { credentials: "include" })
+    .then(r => r.json())
+    .then(data => {
+      _meCache = (data && data.user) ? data : null;
+      return data;
+    })
+    .catch(() => ({ user: null }))
+    .finally(() => { _mePromise = null; });
+  return _mePromise;
+};
+
 (function(){
   function ensureModal(){
     let overlay = document.getElementById("appModalOverlay");

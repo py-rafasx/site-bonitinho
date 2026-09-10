@@ -57,8 +57,7 @@ async function initFeedState() {
 
 async function fetchMyUserId() {
     try {
-        const me = await fetch("/api/auth/me");
-        const meData = await me.json();
+        const meData = await fetchCurrentMe();
         if (meData.user) {
             myUserId = meData.user.id;
             myUser = meData.user;
@@ -429,12 +428,12 @@ function feedCardHTML(img, i) {
                 return `<div class="feed-carousel-slide"><img src="/images/${escText(m.name)}" alt=""${prio} decoding="async" class="${nsfwClass.trim()}"></div>`;
             }).join("");
             const dots = img.media.map((_, dI) => `<span class="feed-carousel-dot${dI === 0 ? ' active' : ''}" data-idx="${dI}"></span>`).join("");
-            mediaSection = `<div class="feed-carousel" data-post="${escText(img.post_id)}">${slides}<div class="feed-carousel-dots">${dots}</div></div>`;
+            mediaSection = `<div class="feed-carousel has-feed-skeleton" data-post="${escText(img.post_id)}"><span class="feed-skeleton" aria-hidden="true"></span>${slides}<div class="feed-carousel-dots">${dots}</div></div>`;
         } else if (isVideo) {
-            mediaSection = `<div class="feed-img">${createVideoPlayerHTML("/images/" + escText(img.name), aboveFold)}</div>`;
+            mediaSection = `<div class="feed-img has-feed-skeleton"><span class="feed-skeleton" aria-hidden="true"></span>${createVideoPlayerHTML("/images/" + escText(img.name), aboveFold)}</div>`;
         } else {
             const imgAttr = aboveFold ? ' fetchpriority="high" loading="eager"' : ' fetchpriority="low" loading="lazy"';
-            mediaSection = `<div class="feed-img${img.nsfw ? ' nsfw-container' : ''}"><img src="/images/${escText(img.name)}" alt=""${imgAttr} decoding="async" class="${nsfwClass.trim()}">${img.nsfw && nsfwFilter === "blur" ? '<button class="nsfw-reveal-btn" type="button">Mostrar imagem</button>' : ''}</div>`;
+            mediaSection = `<div class="feed-img has-feed-skeleton${img.nsfw ? ' nsfw-container' : ''}"><span class="feed-skeleton" aria-hidden="true"></span><img src="/images/${escText(img.name)}" alt=""${imgAttr} decoding="async" class="${nsfwClass.trim()}">${img.nsfw && nsfwFilter === "blur" ? '<button class="nsfw-reveal-btn" type="button">Mostrar imagem</button>' : ''}</div>`;
         }
     }
 
@@ -542,6 +541,25 @@ function feedCardHTML(img, i) {
 function initFeedMedia(root) {
     root.querySelectorAll(".feed-carousel").forEach(initFeedCarousel);
     root.querySelectorAll(".video-player").forEach(initVideoPlayer);
+    const skeletonDone = (el) => {
+        const holder = el.closest(".feed-img, .feed-carousel");
+        if (!holder) return;
+        holder.classList.add("media-loaded");
+        const sk = holder.querySelector(".feed-skeleton");
+        if (sk) sk.remove();
+    };
+    root.querySelectorAll("img").forEach(img => {
+        const holder = img.closest(".feed-img, .feed-carousel");
+        if (!holder) return;
+        if (img.complete && img.naturalWidth) skeletonDone(img);
+        else img.addEventListener("load", () => skeletonDone(img), { once: true });
+    });
+    root.querySelectorAll("video").forEach(v => {
+        const holder = v.closest(".feed-img, .feed-carousel");
+        if (!holder) return;
+        if (v.readyState >= 2) skeletonDone(v);
+        else v.addEventListener("loadeddata", () => skeletonDone(v), { once: true });
+    });
 }
 
 function setLikeIcon(btn, liked) {
@@ -751,8 +769,7 @@ async function loadFeedComments(card) {
     let feedIsAdmin = false;
     let feedMyLikes = new Set();
     try {
-        const me = await fetch("/api/auth/me");
-        const meData = await me.json();
+        const meData = await fetchCurrentMe();
         if (meData.user) {
             feedCurrentUserId = meData.user.id;
             feedIsAdmin = meData.user.is_admin || false;
@@ -2241,8 +2258,7 @@ document.getElementById("feedCreateSend")?.addEventListener("click", async () =>
 
 (async () => {
     try {
-        const res = await fetch("/api/auth/me");
-        const data = await res.json();
+        const data = await fetchCurrentMe();
         if (data.user) {
             window.currentUserIsAdmin = data.user.is_admin || false;
             const avatar = document.getElementById("feedCreateAvatar");

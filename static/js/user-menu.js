@@ -4,8 +4,7 @@ const menu = document.getElementById("userMenu");
 
 async function loadProfile() {
     try {
-        const res = await fetch("/api/auth/me");
-        const data = await res.json();
+        const data = await fetchCurrentMe();
         if (data.user) {
             const avatar = data.user.avatar;
             if (!avatar || avatar === "default-avatar.svg") {
