@@ -504,7 +504,7 @@ async function loadTurnos() {
 
     grid.innerHTML = data.images.map(img => `
         <div class="admin-card">
-            <img src="/images/${img.name}" alt="${img.name}" loading="lazy">
+            <div class="admin-card-media"><img src="/images/${img.name}" alt="${esc(img.name)}" loading="lazy"></div>
             <div class="admin-card-info">
                 <span>${esc(img.owner || "—")}</span>
                 <span><span class="ico ico-upvote-filled admin-card-upvote" aria-hidden="true"></span> ${img.likes || 0}</span>
