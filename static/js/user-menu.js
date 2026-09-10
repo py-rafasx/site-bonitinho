@@ -47,6 +47,9 @@ document.getElementById("menuEleicao").addEventListener("click", () => {
 
 // Logout
 document.getElementById("menuLogout").addEventListener("click", async () => {
+    const ok = await showConfirm("Sair da sua conta?", "Sair", "Sair", "Cancelar", true);
+    if (!ok) return;
+    menu.classList.remove("open");
     await fetch("/api/auth/logout", { method: "POST" });
     window.location.href = "/login";
 });
