@@ -1,27 +1,16 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#FA8128">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="MikanNet">
-  <link rel="apple-touch-icon" href="/static/png/logo-128x128.png">
-  <link rel="icon" href="/static/png/logo-128x128.png">
-  <title>Admin — MikanNet</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/admin.css">
-  <link rel="stylesheet" href="/static/css/modals.css">
-  <script src="/static/js/theme.js"></script>
-</head>
-<body class="admin-page">
+{% extends "base.html" %}
+
+{% block title %}Admin — MikanNet{% endblock %}
+
+{% block body_class %}admin-page{% endblock %}
+
+{% block extra_css %}<link rel="stylesheet" href="/static/css/admin.css">{% endblock %}
+
+{% block content %}
 
   <div class="admin-header">
     <a href="/" class="admin-back"><svg class="back-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg></a>
     <h2>Admin</h2>
-    <div class="admin-header-spacer"></div>
   </div>
 
   <div class="admin-tabs">
@@ -63,10 +52,10 @@
   </div>
 
   <div id="tabUsers" style="display:none">
-    <div class="turnos-panel" style="margin-bottom: 0.75rem;">
+    <div class="turnos-panel u-mb-sm">
       <div class="turnos-stats">
-        <label class="turnos-stat" style="flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
-          <span class="turnos-stat-label" style="font-size: 0.85rem;">Exigir aprovação de novos usuários</span>
+        <label class="turnos-stat u-row-between">
+          <span class="turnos-stat-label u-text-sm">Exigir aprovação de novos usuários</span>
           <span class="turnos-check"><input type="checkbox" id="settingRequireApproval">Ativar</span>
         </label>
       </div>
@@ -117,7 +106,7 @@
         </div>
 
         <div id="subtabPosts">
-          <div class="admin-scrollrow admin-post-actions-row" style="margin-bottom: 0.75rem;">
+          <div class="admin-scrollrow admin-post-actions-row u-mb-sm">
             <button class="admin-btn outline" id="adminSelectAllEleicaoPosts">Selecionar todas</button>
             <button class="admin-btn danger" id="adminDeleteSelectedEleicao">Excluir</button>
             <button class="admin-btn outline" id="adminRemoveLikesEleicao">Remover likes</button>
@@ -168,12 +157,13 @@
       </div>
       <div class="winner-modal-actions">
         <button id="winnerCancel" class="confirm-btn">Cancelar</button>
-        <button id="winnerConfirm" class="confirm-btn" style="background: var(--btn-bg); color: #fff; border-color: var(--btn-bg);">Salvar</button>
+        <button id="winnerConfirm" class="confirm-btn primary">Salvar</button>
       </div>
     </div>
   </div>
+{% endblock %}
 
+{% block scripts %}
   <script src="/static/js/modals.js"></script>
   <script src="/static/js/admin.js"></script>
-</body>
-</html>
+{% endblock %}

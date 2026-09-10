@@ -1,22 +1,12 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#FA8128">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="MikanNet">
-  <link rel="apple-touch-icon" href="/static/png/logo-128x128.png">
-  <link rel="icon" href="/static/png/logo-128x128.png">
-  <title>Criar conta — MikanNet</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/auth.css">
-  <link rel="stylesheet" href="/static/css/modals.css">
-  <script src="/static/js/theme.js"></script>
-</head>
-<body class="auth-page">
+{% extends "base.html" %}
+
+{% block title %}Criar conta — MikanNet{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block extra_css %}<link rel="stylesheet" href="/static/css/auth.css">{% endblock %}
+
+{% block content %}
 
   <div class="auth-card">
     <div class="auth-header">
@@ -55,16 +45,17 @@
   </div>
 
   <div class="app-modal-overlay" id="approvalModal" hidden>
-    <div class="app-modal-card" style="text-align: center;">
+    <div class="app-modal-card center">
       <h3>Conta Criada!</h3>
-      <p style="margin-top: 0.5rem; margin-bottom: 1.5rem;">Sua conta foi criada com sucesso, mas exige aprovação de um administrador antes do primeiro acesso.</p>
-      <div class="app-modal-actions" style="justify-content: center; margin-top: 0;">
-        <button type="button" class="app-modal-btn primary" id="approvalModalBtn" style="width: 100%;">Ok, entendi</button>
+      <p>Sua conta foi criada com sucesso, mas exige aprovação de um administrador antes do primeiro acesso.</p>
+      <div class="app-modal-actions center">
+        <button type="button" class="app-modal-btn primary full" id="approvalModalBtn">Ok, entendi</button>
       </div>
     </div>
   </div>
+{% endblock %}
 
+{% block scripts %}
   <script src="/static/js/password-toggle.js"></script>
   <script src="/static/js/auth.js"></script>
-</body>
-</html>
+{% endblock %}

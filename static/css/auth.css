@@ -11,7 +11,7 @@
   width: 100%;
   max-width: 360px;
   background: var(--surface);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   padding: 2rem 1.5rem 1.75rem;
   border: 1px solid var(--border);
 }
@@ -56,6 +56,7 @@
 }
 
 .field {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -67,13 +68,11 @@
   color: var(--text-soft);
 }
 
-.field { position: relative; }
-
 .field input {
   height: 40px;
   padding: 0 0.75rem;
   border: 1px solid var(--border-strong);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   font-family: inherit;
   outline: none;
@@ -84,14 +83,8 @@
 }
 
 .field input:focus {
-  border-color: var(--text);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
-}
-
-.password-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .auth-hint {
@@ -101,32 +94,14 @@
   color: var(--text-muted);
 }
 
-.password-wrapper input {
-  padding-right: 2.5rem;
+.code-input {
+  text-transform: uppercase;
 }
-
-.password-toggle {
-  position: absolute;
-  right: 6px;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
-
-.password-toggle:hover { background: var(--surface-2); color: var(--text); }
-.password-toggle svg { width: 18px; height: 18px; }
 
 .auth-btn {
   height: 40px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   background: var(--btn-bg);
   color: var(--btn-text);
   font-size: 0.875rem;
@@ -180,23 +155,24 @@
 .forgot-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: var(--overlay);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .forgot-overlay[hidden] { display: none; }
 
 .forgot-card {
   background: var(--surface);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 1.5rem;
   width: 100%;
   max-width: 360px;
   border: 1px solid var(--border);
+  box-shadow: 0 8px 32px var(--shadow-strong);
 }
 
 .forgot-card h3 {
@@ -224,9 +200,14 @@
   border: 1px solid var(--border);
 }
 
+.auth-btn-secondary:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+}
+
 .forgot-success {
   font-size: 0.8125rem;
-  color: #16a34a;
+  color: var(--success);
   text-align: center;
   margin-top: 0.5rem;
 }
@@ -239,11 +220,11 @@
 
 .field input.input-error {
   border-color: var(--danger);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
+  box-shadow: 0 0 0 3px var(--danger-soft);
 }
 
 .field input.input-success {
-  border-color: #16a34a;
+  border-color: var(--success);
 }
 
 .auth-btn:disabled {

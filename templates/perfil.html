@@ -1,25 +1,10 @@
-<!doctype html>
-<html lang="pt-BR">
+{% extends "base.html" %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#FA8128">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="MikanNet">
-  <link rel="apple-touch-icon" href="/static/png/logo-128x128.png">
-  <link rel="icon" href="/static/png/logo-128x128.png">
-  <title>Perfil — MikanNet</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/perfil.css">
-  <link rel="stylesheet" href="/static/css/modals.css">
-  <script src="/static/js/theme.js"></script>
-</head>
+{% block title %}Perfil — MikanNet{% endblock %}
 
-<body>
+{% block extra_css %}<link rel="stylesheet" href="/static/css/perfil.css">{% endblock %}
 
+{% block content %}
   <main class="profile-page" id="profilePage">
 
     <!-- Top Bar -->
@@ -384,13 +369,13 @@
       </div>
     </div>
   </div>
+{% endblock %}
 
+{% block scripts %}
   <script src="/static/js/modals.js"></script>
   <script src="/static/js/carousel.js"></script>
   <script src="/static/js/comments.js"></script>
   <script src="/static/js/video-player.js"></script>
   <script src="/static/js/lightbox.js"></script>
   <script src="/static/js/perfil.js"></script>
-</body>
-
-</html>
+{% endblock %}

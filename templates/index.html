@@ -1,23 +1,6 @@
-<!doctype html>
-<html lang="pt-BR">
+{% extends "base.html" %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#FA8128">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="MikanNet">
-  <link rel="apple-touch-icon" href="/static/png/logo-128x128.png">
-  <link rel="icon" href="/static/png/logo-128x128.png">
-  <title>MikanNet</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/modals.css">
-  <script src="/static/js/theme.js"></script>
-</head>
-
-<body>
+{% block content %}
   <header>
     <button class="logo" id="logoHome" type="button" title="MikanNet" aria-label="MikanNet — página inicial">
       <div id="logo-img"><img src="/static/png/logo-128x128.png" type="image/png" alt=""></div>
@@ -259,7 +242,9 @@
       <p class="search-hint">Digite para buscar pessoas e posts</p>
     </div>
   </div>
+{% endblock %}
 
+{% block scripts %}
 <script src="/static/js/modals.js"></script>
 <script src="/static/js/carousel.js"></script>
 <script src="/static/js/download.js"></script>
@@ -281,5 +266,4 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
-
-</html>
+{% endblock %}

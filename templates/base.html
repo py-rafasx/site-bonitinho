@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#FA8128">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MikanNet">
+  <link rel="apple-touch-icon" href="/static/png/logo-128x128.png">
+  <link rel="icon" href="/static/png/logo-128x128.png">
+  <title>{% block title %}MikanNet{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/modals.css">
+  {% block extra_css %}{% endblock %}
+  <script src="/static/js/theme.js"></script>
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+{% block content %}{% endblock %}
+{% block scripts %}{% endblock %}
+</body>
+
+</html>

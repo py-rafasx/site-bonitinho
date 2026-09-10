@@ -1,22 +1,12 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#FA8128">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="MikanNet">
-  <link rel="apple-touch-icon" href="/static/png/logo-128x128.png">
-  <link rel="icon" href="/static/png/logo-128x128.png">
-  <title>Eleição — MikanNet</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/votos.css">
-  <link rel="stylesheet" href="/static/css/modals.css">
-  <script src="/static/js/theme.js"></script>
-</head>
-<body class="votos-page">
+{% extends "base.html" %}
+
+{% block title %}Eleição — MikanNet{% endblock %}
+
+{% block body_class %}votos-page{% endblock %}
+
+{% block extra_css %}<link rel="stylesheet" href="/static/css/votos.css">{% endblock %}
+
+{% block content %}
 
   <div class="votos-header">
     <a href="/" class="votos-back"><svg class="back-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg></a>
@@ -71,8 +61,9 @@
       </div>
     </div>
   </div>
+{% endblock %}
 
+{% block scripts %}
   <script src="/static/js/modals.js"></script>
   <script src="/static/js/votos.js"></script>
-</body>
-</html>
+{% endblock %}

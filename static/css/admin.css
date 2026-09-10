@@ -1,20 +1,27 @@
 .admin-page {
   background: var(--bg);
   min-height: 100dvh;
-  padding: 0.1rem;
+  padding: 1rem;
   max-width: 800px;
   margin: 0 auto;
 }
 
 /* Header */
 .admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  justify-content: center;
+  padding-block: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: var(--bg);
 }
 
 .admin-back {
+  position: absolute;
+  left: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -29,21 +36,12 @@
   background: var(--surface-2);
 }
 
-.back-icon {
-  width: 20px;
-  height: 20px;
-}
-
 .admin-header h2 {
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text);
   letter-spacing: -0.3px;
   margin: 0;
-}
-
-.admin-header-spacer {
-  width: 32px;
 }
 
 /* Tabs */
@@ -411,7 +409,7 @@
   height: 40px;
   padding: 0 1rem;
   border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   font-family: inherit;
   outline: none;
@@ -421,7 +419,8 @@
 }
 
 .users-search:focus {
-  border-color: var(--text-secondary);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .users-search::placeholder {
@@ -625,7 +624,7 @@
   height: 40px;
   padding: 0 2.8rem 0 1rem;
   border: 1.5px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   font-family: inherit;
   outline: none;
@@ -635,7 +634,8 @@
 }
 
 .posts-search:focus {
-  border-color: var(--btn-bg);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .posts-search::placeholder {
@@ -654,7 +654,7 @@
 .admin-filter {
   padding: 0.4rem 0.4rem;
   border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: var(--surface);
   color: var(--text-secondary);
   font-size: 0.75rem;
@@ -698,6 +698,7 @@
 
 #adminStatus,
 #adminStatusEleicao {
+  display: block;
   font-size: 0.75rem;
   color: var(--text-secondary);
   text-align: center;
@@ -709,7 +710,7 @@
   min-width: 0;
   padding: 0.5rem 0.625rem;
   border: 1.5px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 0.75rem;
   font-weight: 500;
   font-family: inherit;
@@ -731,18 +732,19 @@
   transform: scale(0.97);
 }
 
-.admin-btn.purple {
+.admin-btn.primary {
   background: var(--btn-bg);
-  border-color: var(--text);
+  border-color: var(--btn-bg);
   color: var(--btn-text);
 }
 
-.admin-btn.purple:hover {
+.admin-btn.primary:hover {
   background: var(--btn-hover);
+  border-color: var(--btn-hover);
 }
 
 .admin-btn.danger {
-  border-color: #fcdcc0;
+  border-color: var(--danger-soft);
   color: var(--danger);
 }
 
@@ -762,8 +764,8 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: 300;
+  background: var(--overlay);
+  z-index: 1000;
   align-items: center;
   justify-content: center;
 }
@@ -774,11 +776,11 @@
 
 .confirm-card {
   background: var(--surface);
-  border-radius: 14px;
+  border-radius: var(--radius-xl);
   padding: 1.5rem;
   max-width: 320px;
   width: 90%;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 32px var(--shadow-strong);
 }
 
 .confirm-card p {
@@ -801,11 +803,22 @@
   padding: 0.5rem 1rem;
 }
 
+.confirm-btn.primary {
+  background: var(--btn-bg);
+  border-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+.confirm-btn.primary:hover {
+  background: var(--btn-hover);
+  border-color: var(--btn-hover);
+}
+
 /* Turnos panel */
 .turnos-panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   padding: 1.25rem;
   margin-bottom: 1rem;
   font-size: 0.8125rem;
@@ -849,7 +862,7 @@
   height: 36px;
   padding: 0 0.5rem;
   border: 1.5px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   font-family: inherit;
   box-sizing: border-box;
@@ -860,7 +873,8 @@
 }
 
 .turnos-stat input[type="number"]:focus {
-  border-color: var(--text-secondary);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .turnos-check {
@@ -945,7 +959,7 @@
   padding: 0.75rem;
   background: var(--surface);
   border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -1023,8 +1037,8 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 300;
+  background: var(--overlay);
+  z-index: 1000;
   align-items: center;
   justify-content: center;
   padding: 1rem;
@@ -1036,11 +1050,11 @@
 
 .winner-modal-card {
   background: var(--surface);
-  border-radius: 14px;
+  border-radius: var(--radius-xl);
   padding: 1.25rem;
   max-width: 380px;
   width: 90%;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 32px var(--shadow-strong);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -1056,7 +1070,7 @@
 .winner-modal-preview {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--surface-2);
 }
@@ -1091,7 +1105,7 @@
   min-height: 36px;
   padding: 0.375rem 0.625rem;
   border: 1.5px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 0.8125rem;
   font-family: inherit;
   background: var(--surface);
@@ -1103,7 +1117,8 @@
 }
 
 .winner-modal-input:focus {
-  border-color: var(--btn-bg);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .winner-modal-actions {

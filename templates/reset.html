@@ -1,21 +1,12 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#FA8128">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="MikanNet">
-  <link rel="apple-touch-icon" href="/static/png/logo-128x128.png">
-  <link rel="icon" href="/static/png/logo-128x128.png">
-  <title>Recuperar senha — MikanNet</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/auth.css">
-  <script src="/static/js/theme.js"></script>
-</head>
-<body class="auth-page">
+{% extends "base.html" %}
+
+{% block title %}Recuperar senha — MikanNet{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
+{% block extra_css %}<link rel="stylesheet" href="/static/css/auth.css">{% endblock %}
+
+{% block content %}
 
   <div class="auth-card">
     <div class="auth-header">
@@ -33,7 +24,7 @@
       </div>
       <div class="field">
         <label for="resetCode">Código</label>
-        <input type="text" id="resetCode" placeholder="ex: A1B2C3D4" required autocomplete="off" style="text-transform:uppercase">
+        <input type="text" id="resetCode" class="code-input" placeholder="ex: A1B2C3D4" required autocomplete="off">
       </div>
       <div class="field">
         <label for="newPassword">Nova senha</label>
@@ -52,7 +43,9 @@
       <a href="/login">Voltar ao login</a>
     </p>
   </div>
+{% endblock %}
 
+{% block scripts %}
   <script>
     const form = document.getElementById("resetForm");
     const errEl = document.getElementById("resetError");
@@ -91,5 +84,4 @@
     });
   </script>
   <script src="/static/js/password-toggle.js"></script>
-</body>
-</html>
+{% endblock %}
