@@ -88,11 +88,12 @@ async function clearNotifications() {
 }
 
 function updateBadge(count) {
+    // Ensure badge is visible
+    bellBadge.hidden = false;
     if (count > 0) {
         bellBadge.textContent = count > 99 ? "99+" : count;
-        bellBadge.hidden = false;
     } else {
-        bellBadge.hidden = true;
+        bellBadge.textContent = "0";
     }
 }
 
