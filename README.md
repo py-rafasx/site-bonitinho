@@ -33,7 +33,7 @@ Seu app está pronto. Você pode verificar clicando no link que vem **Configurat
 3. Clone o repositório:
 
 ```bash
-git clone https://github.com/JavaRaf/site-bonitinho-mobile.git
+git clone https://github.com/py-rafasx/site-bonitinho-mobile.git
 ```
 
 4. Entre na pasta do repositório:
