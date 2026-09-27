@@ -841,10 +841,12 @@ document.getElementById("editSave").addEventListener("click", async () => {
     if (data.error) { showAlert(data.error, "Erro"); return; }
 
     closeEditModal();
+    sessionStorage.removeItem(profileCacheKey(profile.username));
+    sessionStorage.removeItem(profileCacheKey(username));
     if (username !== profile.username) {
         goToProfile(username);
     } else {
-        await loadProfile();
+        await loadProfile(true);
     }
 });
 
