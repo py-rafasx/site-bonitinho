@@ -805,6 +805,8 @@ function toggleFeedComments(btn) {
     if (box.hidden) {
         box.hidden = false;
         loadFeedComments(card);
+        const ta = card.querySelector(".feed-comment-form textarea");
+        if (ta) ta.focus();
     } else {
         box.hidden = true;
     }
