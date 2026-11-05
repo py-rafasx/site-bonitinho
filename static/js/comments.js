@@ -60,7 +60,9 @@ function esc(str) {
 }
 
 function parseMentions(text) {
-    return esc(text).replace(/@(\w+)/g, '<span class="comment-mention">@$1</span>');
+    return esc(text).replace(/@(\w+)/g, (m, username) =>
+        `<a class="comment-mention" href="/perfil/${encodeURIComponent(username)}">@${username}</a>`
+    );
 }
 
 async function loadComments(forceRefresh = false) {
@@ -246,6 +248,9 @@ function insertMention(username) {
     mentionInput.focus();
     const pos = before.length + username.length + 2;
     mentionInput.setSelectionRange(pos, pos);
+    if (typeof renderCommentHighlight === "function") renderCommentHighlight(mentionInput);
+    if (typeof autoResizeFeed === "function") autoResizeFeed(mentionInput);
+    if (typeof updateFeedCommentSendBtn === "function") updateFeedCommentSendBtn(mentionInput.closest("form"));
     hideMentionDropdown();
 }
 

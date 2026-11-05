@@ -136,6 +136,29 @@ function escText(str) {
     return div.innerHTML;
 }
 
+function renderMentionsHTML(text) {
+    return escText(text).replace(/@(\w+)/g, (m, username) =>
+        `<a class="comment-mention" href="/perfil/${encodeURIComponent(username)}">@${username}</a>`
+    );
+}
+
+function renderCommentHighlight(textarea) {
+    if (!textarea) return;
+    const wrap = textarea.closest(".comment-input-wrap");
+    const highlight = wrap && wrap.querySelector(".comment-highlight");
+    if (!highlight) return;
+    // espelha as métricas do textarea para o texto do overlay alinhar com o cursor
+    const cs = getComputedStyle(textarea);
+    [
+        "paddingTop", "paddingRight", "paddingBottom", "paddingLeft",
+        "fontFamily", "fontSize", "fontWeight", "lineHeight",
+        "letterSpacing", "textTransform", "textIndent",
+    ].forEach((prop) => { highlight.style[prop] = cs[prop]; });
+    highlight.innerHTML = escText(textarea.value)
+        .replace(/@(\w+)/g, '<span class="comment-mention">@$1</span>');
+    highlight.scrollTop = textarea.scrollTop;
+}
+
 function sortedImages() {
     let imgs = [...allImages];
     if (nsfwFilter === "hide") {
@@ -497,7 +520,10 @@ function feedCardHTML(img, i) {
                 </div>
                 <div class="comment-box">
                     <div class="comment-media-preview" hidden></div>
-                    <textarea class="comment-textarea" placeholder="${userPlaceholder}" rows="1" autocomplete="off"></textarea>
+                    <div class="comment-input-wrap">
+                        <div class="comment-highlight" aria-hidden="true"></div>
+                        <textarea class="comment-textarea" placeholder="${userPlaceholder}" rows="1" autocomplete="off"></textarea>
+                    </div>
                     <div class="comment-form-actions">
                         <input type="file" class="comment-media-input" accept="image/*,image/webp,video/mp4,video/webm,video/quicktime,.gif" hidden>
                         
@@ -695,7 +721,7 @@ function renderFeedNode(c, depth, currentUserId, isAdmin, myCommentLikes) {
     html += `<div class="comment-body">`;
     html += `<div class="comment-bubble">`;
     html += `<div class="comment-user-row" data-comment-username="${escText(c.username)}"><span class="comment-user" style="color:${c.color || userColorFeed(c.username)}">${escText(c.display_name || c.username)}</span><span class="comment-handle">@${escText(c.username)}</span></div>`;
-    html += `<span class="comment-text">${escText(c.text).replace(/@(\w+)/g, '<span class="comment-mention">@$1</span>')}</span>`;
+    html += `<span class="comment-text">${renderMentionsHTML(c.text)}</span>`;
     if (c.media_name) {
         if (c.media_type === "video") {
             html += `<div class="comment-media" style="margin-top:6px;">${createVideoPlayerHTML("/comment-media/" + escText(c.media_name))}</div>`;
@@ -1705,6 +1731,7 @@ async function onFeedSubmit(e) {
             if (mediaInput) { mediaInput.value = ""; const prev=form.querySelector(".comment-media-preview"); if(prev){ prev.hidden=true; prev.innerHTML=""; } }
             form._pastedMedia = null;
             autoResizeFeed(textarea);
+            renderCommentHighlight(textarea);
             await loadFeedComments(card);
         } else {
             const d=await res.json().catch(()=>null);
@@ -1720,6 +1747,7 @@ function onFeedInput(e) {
     }
     if (e.target.matches(".feed-comment-form textarea")) {
         autoResizeFeed(e.target);
+        renderCommentHighlight(e.target);
         updateFeedCommentSendBtn(e.target.closest("form"));
     }
 }
@@ -1753,6 +1781,12 @@ function bindFeedEvents(root) {
     root.addEventListener("submit", onFeedSubmit);
     root.addEventListener("input", onFeedInput);
     root.addEventListener("keydown", onFeedKeydown);
+    root.addEventListener("scroll", (e) => {
+        if (!e.target.matches || !e.target.matches(".feed-comment-form textarea")) return;
+        const wrap = e.target.closest(".comment-input-wrap");
+        const highlight = wrap && wrap.querySelector(".comment-highlight");
+        if (highlight) highlight.scrollTop = e.target.scrollTop;
+    }, true);
 root.addEventListener("paste", (e) => {
         if (e.target.matches(".feed-comment-form textarea")) {
             const items = Array.from(e.clipboardData?.items || []);
