@@ -179,7 +179,12 @@ def eleicao_ranking_api():
 @likes_bp.route("/api/eleicao/vencedoras", methods=["GET"])
 def eleicao_vencedoras_api():
     from db.models import Winner
-    winners = Winner.query.order_by(Winner.number.asc()).all()
+    sort = (request.args.get("sort") or "recent").lower()
+    if sort == "oldest":
+        order = (Winner.created_at.asc(), Winner.id.asc())
+    else:
+        order = (Winner.created_at.desc(), Winner.id.desc())
+    winners = Winner.query.order_by(*order).all()
     return jsonify([{
         "id": w.id,
         "image_name": w.image_name,

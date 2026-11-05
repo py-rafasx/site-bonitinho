@@ -78,8 +78,32 @@ async function loadRanking() {
 }
 
 /* === Vencedoras === */
+let winnersSort = "recent";
+
+/* Toggle de ordenação das vencedoras (mais recentes por padrão) */
+(function initWinnersSort() {
+    const btn = document.getElementById("winnersSortBtn");
+    const label = document.getElementById("winnersSortLabel");
+    if (!btn || !label) return;
+
+    function render() {
+        const oldest = winnersSort === "oldest";
+        label.textContent = oldest ? "Mais antigas" : "Mais recentes";
+        btn.classList.toggle("asc", oldest);
+        btn.title = oldest ? "Mostrando mais antigas — clique para mais recentes" : "Mostrando mais recentes — clique para mais antigas";
+    }
+
+    btn.addEventListener("click", () => {
+        winnersSort = winnersSort === "recent" ? "oldest" : "recent";
+        render();
+        loadWinners();
+    });
+
+    render();
+})();
+
 async function loadWinners() {
-    const res = await fetch("/api/eleicao/vencedoras");
+    const res = await fetch(`/api/eleicao/vencedoras?sort=${winnersSort}`);
     const items = await res.json();
     const list = document.getElementById("vencedorasList");
 

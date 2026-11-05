@@ -353,11 +353,42 @@
   color: var(--text-muted);
 }
 
-/* Tab header with add button */
+/* Tab header with sort + add button */
 .votos-tab-header {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.votos-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 32px;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.votos-sort-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.votos-sort-icon {
+  transition: transform 0.2s ease;
+}
+
+.votos-sort-btn.asc .votos-sort-icon {
+  transform: rotate(180deg);
 }
 
 .votos-add-winner {
