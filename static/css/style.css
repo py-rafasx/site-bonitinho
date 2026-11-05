@@ -385,6 +385,15 @@ body.clone-top #headerClone { top: 0; }
   align-items: center;
 }
 
+.header-section-arrow .sort-ico {
+  display: none;
+}
+
+.header-section-arrow[data-mode="recent"] .sort-ico-recent,
+.header-section-arrow[data-mode="popular"] .sort-ico-popular {
+  display: block;
+}
+
 .header-sort-menu {
   position: absolute;
   top: 100%;

@@ -250,15 +250,6 @@ function syncSortSelects() {
         if (section.id === "headerSection2") section.classList.toggle("active", isFollowing);
         if (section.id === "headerSection3") section.classList.toggle("active", isEleicao);
     });
-    document.querySelectorAll("#paraVoceSortMenu button").forEach(btn => {
-        btn.classList.toggle("active", !isFollowing && !isEleicao && btn.dataset.sort === (sortMode === "likes" ? "popular" : "recente"));
-    });
-    document.querySelectorAll("#seguindoSortMenu button").forEach(btn => {
-        btn.classList.toggle("active", isFollowing && btn.dataset.sort === (sortMode.endsWith("_likes") ? "popular" : "recente"));
-    });
-    document.querySelectorAll("#eleicaoSortMenu button").forEach(btn => {
-        btn.classList.toggle("active", isEleicao && btn.dataset.sort === (sortMode.endsWith("_likes") ? "popular" : "recente"));
-    });
 }
 
 function openGrid() {

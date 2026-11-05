@@ -83,14 +83,16 @@ let winnersSort = "recent";
 /* Toggle de ordenação das vencedoras (mais recentes por padrão) */
 (function initWinnersSort() {
     const btn = document.getElementById("winnersSortBtn");
-    const label = document.getElementById("winnersSortLabel");
-    if (!btn || !label) return;
+    if (!btn) return;
 
     function render() {
         const oldest = winnersSort === "oldest";
-        label.textContent = oldest ? "Mais antigas" : "Mais recentes";
-        btn.classList.toggle("asc", oldest);
-        btn.title = oldest ? "Mostrando mais antigas — clique para mais recentes" : "Mostrando mais recentes — clique para mais antigas";
+        btn.dataset.mode = oldest ? "oldest" : "recent";
+        const title = oldest
+            ? "Ordenação: mais antigas — clique para mais recentes"
+            : "Ordenação: mais recentes — clique para mais antigas";
+        btn.title = title;
+        btn.setAttribute("aria-label", title);
     }
 
     btn.addEventListener("click", () => {
